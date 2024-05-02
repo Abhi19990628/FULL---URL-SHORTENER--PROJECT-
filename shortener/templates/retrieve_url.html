@@ -1,0 +1,19 @@
+<!-- retrieve_url.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve URL</title>
+</head>
+<body>
+    <h1>Retrieve URL</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="short_url">Enter Shortened URL:</label>
+        <input type="text" id="short_url" name="short_url" required>
+        <button type="submit">Retrieve</button>
+    </form>
+</body>
+</html>
