@@ -84,7 +84,6 @@ def shorten_url(request):
         if form.is_valid():
             original_url = form.cleaned_data['original_url']
             short_url = generate_short_url()
-            
             try:
                 url_object = URL.objects.create(original_url=original_url, short_url=short_url, user=request.user)
                 return render(request, 'shortened_url.html', {'short_url': short_url})
@@ -108,6 +107,9 @@ def retrieve_url(request):
             return render(request, 'retrieve_url.html', {'error_message': 'Shortened URL not found'})
     else:
         return render(request, 'retrieve_url.html')
+    
+
+
 
 def redirect_original(request, short_url):
     try:
