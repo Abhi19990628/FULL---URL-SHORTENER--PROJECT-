@@ -69,6 +69,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from .utils import generate_short_url
+from .forms import URLForm
 from .models import URL
 
 def home(request):
@@ -79,12 +80,22 @@ def home(request):
 
 def shorten_url(request):
     if request.method == 'POST':
-        original_url = request.POST['original_url']
-        short_url = generate_short_url()
-        # Further processing and saving of original_url and short_url
-        return render(request, 'shortened_url.html', {'short_url': short_url})
+        form = URLForm(request.POST)
+        if form.is_valid():
+            original_url = form.cleaned_data['original_url']
+            short_url = generate_short_url()
+            
+            try:
+                url_object = URL.objects.create(original_url=original_url, short_url=short_url, user=request.user)
+                return render(request, 'shortened_url.html', {'short_url': short_url})
+            except Exception as e:
+                # Handle database or other errors
+                return render(request, 'error.html', {'error_message': str(e)})
     else:
-        return render(request, 'shorten_url.html')
+        form = URLForm()
+    return render(request, 'shorten_url.html', {'form': form})
+
+    
 
 def retrieve_url(request):
     if request.method == 'POST':
