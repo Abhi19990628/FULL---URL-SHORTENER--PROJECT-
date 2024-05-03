@@ -9,5 +9,5 @@ class URL(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # Add additional user profile fields as needed
+  
     
