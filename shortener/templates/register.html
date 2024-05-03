@@ -6,32 +6,32 @@
     <title>Register</title>
     <style>
         body {
-            background-color: black;
-            color: white;
+            background-color: #f8f9fa;
             font-family: Arial, sans-serif;
         }
         .container {
             width: 50%;
             margin: 0 auto;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         h2 {
             text-align: center;
+            color: #007bff;
         }
         form {
             margin-top: 20px;
         }
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], input[type="email"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
-            border: none;
+            border: 1px solid #ced4da;
             border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+            background-color: #f8f9fa;
+            color: #495057;
         }
         button[type="submit"] {
             padding: 10px 20px;
@@ -51,7 +51,18 @@
         <h2>Register</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <label for="id_first_name">First Name:</label>
+            <input type="text" name="first_name" id="id_first_name" required>
+            <label for="id_last_name">Last Name:</label>
+            <input type="text" name="last_name" id="id_last_name" required>
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" required>
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" id="id_username" required>
+            <label for="id_password1">Password:</label>
+            <input type="password" name="password1" id="id_password1" required>
+            <label for="id_password2">Confirm Password:</label>
+            <input type="password" name="password2" id="id_password2" required>
             <button type="submit">Register</button>
         </form>
     </div>

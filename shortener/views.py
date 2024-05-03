@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .utils import generate_short_url
 from .forms import URLForm
 from .models import URL
+from django.views.decorators.http import require_http_methods
 
 def home(request):
     if request.user.is_authenticated:
@@ -70,10 +71,6 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-def logout_view(request):
-    logout(request)
-    return redirect('login')
-
 def register_view(request): 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -83,3 +80,13 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+@require_http_methods(["GET", "POST"])
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        return render(request, 'logout.html')
+    else:
+        # Redirect to login page for GET requests
+        return redirect('login')
