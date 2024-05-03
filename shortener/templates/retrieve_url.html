@@ -15,5 +15,12 @@
         <input type="text" id="short_url" name="short_url" required>
         <button type="submit">Retrieve</button>
     </form>
+    {% if original_url %}
+    <p>Original URL: <a href="{{ original_url }}">{{ original_url }}</a></p>
+    {% endif %}
+    {% if error_message %}
+    <p>{{ error_message }}</p>
+    {% endif %}
 </body>
 </html>
+

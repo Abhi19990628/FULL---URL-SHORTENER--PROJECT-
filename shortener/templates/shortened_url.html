@@ -7,6 +7,20 @@
 </head>
 <body>
     <h1>Shortened URL</h1>
-    <p>Your shortened URL is: <a href="http://127.0.0.1:8000/{{ short_url }}">{{ short_url }}</a></p>
+    <p>Your shortened URL is: <a id="shortened-url" href="http://127.0.0.1:8000/{{ short_url }}">{{ short_url }}</a></p>
+    <button id="copy-button">Copy</button>
+
+    <script>
+        document.getElementById("copy-button").addEventListener("click", function() {
+            var url = document.getElementById("shortened-url");
+            var range = document.createRange();
+            range.selectNode(url);
+            window.getSelection().removeAllRanges(); // Clear previous selection
+            window.getSelection().addRange(range); // Select text
+            document.execCommand("copy"); // Copy text to clipboard
+            window.getSelection().removeAllRanges(); // Clear selection after copying
+            alert("URL copied to clipboard");
+        });
+    </script>
 </body>
 </html>

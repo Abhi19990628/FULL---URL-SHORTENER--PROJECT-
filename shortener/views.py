@@ -94,7 +94,9 @@ def shorten_url(request):
         form = URLForm()
     return render(request, 'shorten_url.html', {'form': form})
 
+
     
+
 
 def retrieve_url(request):
     if request.method == 'POST':
@@ -104,21 +106,20 @@ def retrieve_url(request):
             original_url = url_object.original_url
             return render(request, 'retrieve_url.html', {'original_url': original_url})
         except URL.DoesNotExist:
-            return render(request, 'retrieve_url.html', {'error_message': 'Shortened URL not found'})
+            # Handle case where the short URL is not found
+            error_message = 'Shortened URL not found'
+            return render(request, 'retrieve_url.html', {'error_message': error_message})
     else:
         return render(request, 'retrieve_url.html')
-    
-
 
 
 def redirect_original(request, short_url):
     try:
-        url_object = URL.objects.get(short_url=short_url)
-        original_url = url_object.original_url
-        return redirect(original_url)
+        url_obj = URL.objects.get(short_url=short_url)
+        return redirect(url_obj.original_url)
     except URL.DoesNotExist:
-        # Handle case where the short URL does not exist
-        return redirect('error_page')  # Redirect to a custom error page
+        # Handle case where the short URL is not found
+        return render(request, 'error.html', {'error_message': 'Shortened URL not found'})
 
 def login_view(request):
     if request.method == 'POST':
@@ -140,7 +141,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-def register_view(request):
+def register_view(request): 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
