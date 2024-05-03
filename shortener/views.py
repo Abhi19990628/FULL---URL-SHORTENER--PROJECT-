@@ -40,7 +40,7 @@ def retrieve_url(request):
             original_url = url_object.original_url
             return render(request, 'retrieve_url.html', {'original_url': original_url})
         except URL.DoesNotExist:
-            # Handle case where the short URL is not found
+            
             error_message = 'Shortened URL not found'
             return render(request, 'retrieve_url.html', {'error_message': error_message})
     else:
