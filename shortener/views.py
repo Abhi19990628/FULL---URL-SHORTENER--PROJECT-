@@ -88,5 +88,4 @@ def logout_view(request):
         logout(request)
         return render(request, 'logout.html')
     else:
-        # Redirect to login page for GET requests
         return redirect('login')
