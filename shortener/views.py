@@ -18,7 +18,12 @@ def shorten_url(request):
         if form.is_valid():
             original_url = form.cleaned_data['original_url']
             short_url = generate_short_url()
-           
+            try:
+                url_object = URL.objects.create(original_url=original_url, short_url=short_url, user=request.user)
+                return render(request, 'shortened_url.html', {'short_url': short_url})
+            except Exception as e:
+                 # Handle database or other errors
+                return render(request, 'error.html', {'error_message': str(e)})
     else:
         form = URLForm()
     return render(request, 'shorten_url.html', {'form': form})
