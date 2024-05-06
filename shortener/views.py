@@ -6,7 +6,7 @@ from .forms import URLForm
 from .models import URL
 from django.views.decorators.http import require_http_methods
 
-def home(request):
+
     if request.user.is_authenticated:
         return redirect('shorten_url')
     else:
