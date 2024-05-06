@@ -4,9 +4,10 @@ from django.shortcuts import render, redirect
 from .utils import generate_short_url
 from .forms import URLForm
 from .models import URL
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_method
 
 
+def home(request):
     if request.user.is_authenticated:
         return redirect('shorten_url')
     else:
