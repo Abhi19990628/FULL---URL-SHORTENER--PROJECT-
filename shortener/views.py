@@ -19,7 +19,14 @@ def shorten_url(request):
         if form.is_valid():
             original_url = form.cleaned_data['original_url']
             short_url = generate_short_url()
-            
+        try:
+            url_object = URL.objects.get(short_url=short_url)
+            original_url = url_object.original_url
+            return render(request, 'retrieve_url.html', {'original_url': original_url})
+        except URL.DoesNotExist:
+             # Handle case where the short URL is not found
+            error_message = 'Shortened URL not found'
+            return render(request, 'retrieve_url.html', {'error_message': error_message})
     else:
         form = URLForm()
     return render(request, 'shorten_url.html', {'form': form})
